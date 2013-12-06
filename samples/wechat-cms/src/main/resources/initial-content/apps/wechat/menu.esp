@@ -1,0 +1,11 @@
+
+<%
+load("constants.esp");
+%>
+
+<div id="header">				
+	<ul class="tabs">
+		<li><a href="/content/wechat/posts.admin.html">Post List</a></li>
+		<li><a href="/content/wechat/posts/*.edit.html">New Post</a></li>
+	</ul>
+</div>

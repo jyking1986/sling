@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<%
+// Check if we have a currentNode
+var currentNodeProvided = ((typeof currentNode != "undefined") && currentNode.title != null); 
+function getCurrentNodeValue(prop) {
+    var result = "";
+    if(currentNodeProvided && currentNode[prop]) {
+        result = currentNode[prop];
+    }
+    return result;
+}
+
+// Compute path to used for the POST request, different
+// depending on existence of a current node or not
+var postPath = null;
+var pageTitle = null;
+if(currentNodeProvided) {
+    postPath = currentNode.getPath();
+    pageTitle = currentNode.title;
+} else {
+    postPath = request.getContextPath() + "";
+    if(postPath.length > 0) {
+        postPath += "/";
+    }
+    postPath += request.getPathInfo();
+    pageTitle = "New post";
+}
+
+// Load header utility
+load("header.esp");
+%>
+	<body>
+		
+		<div class="title">
+		  <div class="logo">
+		    <a href="http://sling.apache.org">
+		      <img border="0" src="/apps/wechat/sling-logo.png"/>
+		    </a>
+		  </div>
+		</div>
+		
+		<div class="menu">
+			<%
+			load("menu.esp");
+			%>
+       </div>
+       
+       <div class="main">
+            <h1><%= pageTitle %></h1>
+			
+            <p>
+                Note that you need to <a href="?sling:authRequestLogin=1">login</a> 
+                before creating or editing a post.
+            </p> 
+					
+			<form class="hform" method="POST" action="<%= postPath %>" enctype="multipart/form-data">	        				
+					
+					<p><label>Title</label>
+					<input name="title" type="text" size="80" value="<%= getCurrentNodeValue("title") %>"></p>
+					
+					<p><label>Body</label>
+					<textarea name="posttext"><%=  getCurrentNodeValue("posttext") %></textarea></p>
+					
+					<p><label>File</label><input type="file" name="attachments/*"/></p>
+
+					
+					<input type="hidden" name="created"/> 
+					<input type="hidden" name="_charset_" value="UTF-8"/>
+					<input name=":redirect" type="hidden" value="/content/wechat/posts.admin.html"/>
+												
+				<input type="submit" value="Post" class="button">
+			</form>
+		</div>
+
+        <script type="text/javascript" src="/apps/wechat/common/js/tinymce/tinymce.min.js"></script>
+        <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste moxiemanager"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+        });
+        </script>
+
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+ 
+<html>
+<%
+pageTitle = "Post List"
+load("header.esp")
+%>
+	<body>
+		<div class="title">
+		  <div class="logo">
+		    <a href="http://sling.apache.org">
+		      <img border="0" src="/apps/wechat/sling-logo.png"/>
+		    </a>
+		  </div>
+		</div>
+		
+		<div class="menu">
+			<%
+			load("menu.esp");
+			%>
+       </div>
+       
+       <div class="main">
+			<h1><%= pageTitle %></h1>
+					
+			  <table>
+			    <tr>
+			      <th>Title</th>
+			
+			      <th>Date</th>
+			      <th colspan="2">Controls</th>
+			    </tr>
+			    
+			    <%
+			    df = new java.text.SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+			
+			    posts = currentNode.getNodes()
+			    for (a in posts) {
+			    	post = posts[a]
+			        if(!post.created) {
+			          // does not look like one of our posts
+			          continue;
+			        }
+			    %>
+			    
+			    <tr>
+			      <td><%=post.title%></td>
+			      <td><%=df.format(post.created.getTime())%></td>
+			      <td><a target="_blank" href="/content/wechat/posts/<%=a%>.html">View</a>&nbsp;<a href="/content/wechat/posts/<%=a%>.edit.html">Edit</a></td>
+			      <td>
+			        <form method="POST" action="/content/wechat/posts/<%=a%>">
+				          <input name=":redirect" type="hidden" value="/content/wechat/posts.admin.html"/>
+				          <input name=":operation" type="hidden" value="delete"/> 
+				          <input type="submit" value="Delete">
+			      	</form>			          
+			      </td>
+			    </tr>
+			    
+			  <%}%>
+			  </table>
+		</div>			  
+	</body>
+</html>
