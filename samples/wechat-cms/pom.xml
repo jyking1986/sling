@@ -51,13 +51,11 @@
                             <!--org.apache.sling.*,-->
                             <!--org.dom4j.io.*-->
                         <!--</Import-Package>-->
-                        <!--<Import-Package>-->
-                            <!--org.test.*;version=1.0-SNAPSHOT,-->
-                            <!--org.test2.*;version=1.0-SNAPSHOT,-->
-                            <!--org.test3.*;version=1.0-SNAPSHOT-->
-                        <!--</Import-Package>-->
-                        <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
-                        <Embed-Transitive>true</Embed-Transitive>
+                        <Import-Package>
+                            !org.dom4j,*
+                        </Import-Package>
+                        <Embed-Dependency>dom4j;scope=compile|runtime</Embed-Dependency>
+                        <!--<Embed-Transitive>true</Embed-Transitive>-->
                     </instructions>
                 </configuration>
             </plugin>
