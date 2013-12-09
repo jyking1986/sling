@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.apache.sling</groupId>
+        <artifactId>sling</artifactId>
+        <version>18</version>
+        <relativePath>../../parent/pom.xml</relativePath>
+    </parent>
+
+    <groupId>lib</groupId>
+    <artifactId>test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>bundle</packaging>
+    <description>
+        ${pom.artifactId} wrapper OSGi bundle.
+    </description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <instructions>
+                            <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+                            <Import-Package>
+                                org.test.*;version=1.0-SNAPSHOT,
+                                org.test2.*;version=1.0-SNAPSHOT,
+                                org.test3.*;version=1.0-SNAPSHOT
+                            </Import-Package>
+                            <Export-Package>
+                                !*
+                            </Export-Package>
+                            <!--<Export-Package>-->
+                                <!--org.test.*;version=1.0-SNAPSHOT,-->
+                                <!--org.test2.*;version=1.0-SNAPSHOT,-->
+                                <!--org.test3.*;version=1.0-SNAPSHOT-->
+                            <!--</Export-Package>-->
+                            <!--<Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>-->
+                            <!--<Embed-Transitive>true</Embed-Transitive>-->
+                        </instructions>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>lib</groupId>
+            <artifactId>service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    
+</project>
